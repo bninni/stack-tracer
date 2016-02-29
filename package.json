@@ -1,0 +1,41 @@
+{
+  "name": "-trace",
+  "version": "1.0.0",
+  "description": "Global access to all CallSite/Stack Trace Properties and more",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "vows test/test.js --spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bninni/-trace.git"
+  },
+  "keywords": [
+    "stack",
+    "trace",
+    "call",
+    "site",
+    "callsite",
+    "line",
+    "number",
+    "column",
+    "number",
+    "is",
+    "constructor",
+    "get",
+    "caller",
+    "function"
+  ],
+  "devDependencies": {
+    "vows": "~0.8.1"
+  },
+  "author": "Brian Ninni <brian@ninni.io> (http://ninni.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bninni/-trace/issues"
+  },
+  "homepage": "https://github.com/bninni/-trace#readme"
+}

@@ -1,21 +1,21 @@
-# __trace
-[![Build Status](https://travis-ci.org/bninni/__trace.svg?branch=master)](https://travis-ci.org/bninni/__trace)
+# -trace
+[![Build Status](https://travis-ci.org/bninni/-trace.svg?branch=master)](https://travis-ci.org/bninni/-trace)
 
 Global access to all CallSite/Stack Trace Properties and more
 
 ## Install
 ```
-npm install __trace
+npm install -trace
 ```
 or
 ```
-npm install -g __trace
+npm install -g -trace
 ```
 
 Then import the module into your program:
 
 ```javascript
-var trace =  require('__trace')
+var trace =  require('-trace')
 ```
 
 ## Background
@@ -68,10 +68,12 @@ It contains the following properties:
 **trace**
   * This **Tracer** Object (self-referencing)
 
----
-
 **fileName**
   * The name of the **file** where the invocation is defined
+
+**isNative**
+  * Does the invocation occur within **Native** V8 code?
+---
 
 **line**
   * The **line** number of the invocation within the **file**
@@ -80,7 +82,7 @@ It contains the following properties:
   * The **column** number of the invocation within the **file**
 
 ```javascript
-var trace =  require('__trace');
+var trace =  require('-trace');
 
 var myTracer = trace(); //or trace(0);
 //myTracer.line = 3
@@ -102,9 +104,9 @@ myTracer = getTracer();
 
 **typeName**
   * The **type** of `this` as a String
-
+  
 ```javascript
-var trace =  require('__trace');
+var trace =  require('-trace');
 
 var myTracer = trace();
 //myTracer.this = this
@@ -129,7 +131,7 @@ myTracer = getTracer.call(myContext);
   * The name of the **function** as a String
 
 ```javascript
-var trace =  require('__trace');
+var trace =  require('-trace');
 
 var myTracer = trace();
 //myTracer.function = <<this entire script>>
@@ -150,7 +152,7 @@ myTracer = getTracer();
   * The name of the property within `this` which maps to the **function** where the invocation occurred
 
 ```javascript
-var trace =  require('__trace');
+var trace =  require('-trace');
 
 var myTracer = trace();
 //myTracer.methodName = null
@@ -162,17 +164,16 @@ var myObj = {
 }
 
 myTracer = myObj.get();
-//myTracer.methodName = 'get'
+//myTracer.this = myObj
 //myTracer.function = myObj.get
 //myTracer.functionName = 'myObj.get'
+//myTracer.methodName = 'get'
 
 //Function can be named:
-function getTracer(){
-  return trace();
-}
-
 myObj = {
-  'get' : getTracer
+  'get' : function getTracer(){
+    return trace();
+  }
 }
 
 myTracer = myObj.get();
@@ -185,7 +186,7 @@ myTracer = myObj.get();
   * Is `this` the `global` object?
 
 ```javascript
-var trace =  require('__trace');
+var trace =  require('-trace');
 
 var myTracer = trace();
 //myTracer.isToplevel = true
@@ -193,6 +194,9 @@ var myTracer = trace();
 function getTracer(){
   return trace();
 }
+
+myTracer = getTracer();
+//myTracer.isToplevel = true
 
 myTracer = getTracer.call({});
 //myTracer.isToplevel = false
@@ -206,52 +210,22 @@ myTracer = getTracer.call({});
 **evalOrigin**
   * String representing the **CallSite** of the `eval` **function** where the invocation was defined
 
-*The _Toplevel_ will refer to the _Toplevel_ of the `eval` script*
-
 ```javascript
-var trace =  require('__trace');
+var trace =  require('-trace');
 
 var myTracer = eval('trace()');
-//myTracer.isToplevel = true
 //myTracer.isEval = true
 
 function getTracer(){
   return eval('trace()');
 }
 
-myTracer = getTracer.call({});
-//myTracer.isToplevel = true
-//myTracer.isEval = true
-
-eval('function evalGetTracer(){
-  return trace()
-}')
-myTracer = evalGetTracer();
-//myTracer.isToplevel = true
-//myTracer.isEval = true
-
-myTracer = evalGetTracer.call({});
-//myTracer.isToplevel = false
-//myTracer.isEval = true
-```
-
----
-
-**isNative**
-  * Does the invocation occur within **Native** V8 code?
-
-```javascript
-var trace =  require('__trace');
-
-var myTracer = trace();
-//myTracer.isNative = false
-
-function getTracer(){
-  return trace();
-}
-
 myTracer = getTracer();
-//myTracer.isNative = false
+//myTracer.isEval = true
+
+eval('function evalGetTracer(){ return trace() }')
+myTracer = evalGetTracer();
+//myTracer.isEval = true
 ```
 
 ---
@@ -260,7 +234,7 @@ myTracer = getTracer();
   * Does the invocation occur with a **function** invoked as a **constructor**?
 
 ```javascript
-var trace =  require('__trace');
+var trace =  require('-trace');
 
 var myTracer = trace();
 //myTracer.isConstructor = false
@@ -284,7 +258,7 @@ myTracer = new getTracer();
     * Will be **null** if no **caller** exists
 
 ```javascript
-var trace =  require('__trace');
+var trace =  require('-trace');
 
 var myTracer = trace();
 //myTracer.function = <<this entire script>>
@@ -307,7 +281,7 @@ myTracer = getTracer();
     * Will be **null** if no **callee** exists
 
 ```javascript
-var trace =  require('__trace');
+var trace =  require('-trace');
 
 
 var myTracer = trace();
@@ -329,9 +303,9 @@ myTracer = getTracer();
 
 The module also adds a number of global properties which implicitly create a **Tracer** object at that location and return the corresponding property
 
-It is the equivalent of invoking `trace()[propName]`
+It is the equivalent of invoking `trace().<property>`
 
-The properties are all of the above properties, prefixed with a \__:
+The properties are all of the above properties, prefixed with '**\__**':
 
   * **\__callSite**
     * The corresponding **CallSite** Object
@@ -365,7 +339,6 @@ The properties are all of the above properties, prefixed with a \__:
     * The name of the property within `this` which maps to the **function** where the invocation occurred
   * **\__evalOrigin**
     * String representing the **CallSite** of the `eval` **function** where the invocation was defined
-    * Will be **null** if not invoked in an `eval` **function**
   * **\__isToplevel**
     * Is `this` the `global` object?
   * **\__isEval**
@@ -376,7 +349,7 @@ The properties are all of the above properties, prefixed with a \__:
     * Does the invocation occur with a **function** invoked as a **constructor**?
 
 ```javascript
-var trace =  require('__trace')
+var trace =  require('-trace')
 
 __line   //3, same as trace().line
 __column //1, same as trace().column
