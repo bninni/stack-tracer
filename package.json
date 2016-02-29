@@ -1,6 +1,6 @@
 {
-  "name": "-trace",
-  "version": "1.0.0",
+  "name": "stack-tracer",
+  "version": "1.0.1",
   "description": "Global access to all CallSite/Stack Trace Properties and more",
   "main": "index.js",
   "directories": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bninni/-trace.git"
+    "url": "git+https://github.com/bninni/stack-tracer.git"
   },
   "keywords": [
     "stack",
@@ -35,7 +35,7 @@
   "author": "Brian Ninni <brian@ninni.io> (http://ninni.io)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bninni/-trace/issues"
+    "url": "https://github.com/bninni/stack-tracer/issues"
   },
-  "homepage": "https://github.com/bninni/-trace#readme"
+  "homepage": "https://github.com/bninni/stack-tracer#readme"
 }

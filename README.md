@@ -1,21 +1,21 @@
-# -trace
-[![Build Status](https://travis-ci.org/bninni/-trace.svg?branch=master)](https://travis-ci.org/bninni/-trace)
+# stack-tracer
+[![Build Status](https://travis-ci.org/bninni/stackstack-tracerr.svg?branch=master)](https://travis-ci.org/bninni/stackstack-tracerr)
 
 Global access to all CallSite/Stack Trace Properties and more
 
 ## Install
 ```
-npm install -trace
+npm install stack-tracer
 ```
 or
 ```
-npm install -g -trace
+npm install -g stack-tracer
 ```
 
 Then import the module into your program:
 
 ```javascript
-var trace =  require('-trace')
+var trace =  require('stack-tracer')
 ```
 
 ## Background
@@ -35,7 +35,7 @@ This module uses a common method of capturing the raw **Stack Trace** (an Array 
 
 It then creates a **Tracer** Object containing information about a specific **CallSite**
 
-[Read more about the V8 Stack Trace/CallSite API here](https://github.com/v8/v8/wiki/Stack-Trace-API)
+[Read more about the V8 Stack Trace/CallSite API here](https://github.com/v8/v8/wiki/Stackstack-tracer-API)
 
 <a name="usage"></a>
 ## Usage
@@ -82,7 +82,7 @@ It contains the following properties:
   * The **column** number of the invocation within the **file**
 
 ```javascript
-var trace =  require('-trace');
+var trace =  require('stack-tracer');
 
 var myTracer = trace(); //or trace(0);
 //myTracer.line = 3
@@ -106,7 +106,7 @@ myTracer = getTracer();
   * The **type** of `this` as a String
   
 ```javascript
-var trace =  require('-trace');
+var trace =  require('stack-tracer');
 
 var myTracer = trace();
 //myTracer.this = this
@@ -131,7 +131,7 @@ myTracer = getTracer.call(myContext);
   * The name of the **function** as a String
 
 ```javascript
-var trace =  require('-trace');
+var trace =  require('stack-tracer');
 
 var myTracer = trace();
 //myTracer.function = <<this entire script>>
@@ -152,7 +152,7 @@ myTracer = getTracer();
   * The name of the property within `this` which maps to the **function** where the invocation occurred
 
 ```javascript
-var trace =  require('-trace');
+var trace =  require('stack-tracer');
 
 var myTracer = trace();
 //myTracer.methodName = null
@@ -186,7 +186,7 @@ myTracer = myObj.get();
   * Is `this` the `global` object?
 
 ```javascript
-var trace =  require('-trace');
+var trace =  require('stack-tracer');
 
 var myTracer = trace();
 //myTracer.isToplevel = true
@@ -211,7 +211,7 @@ myTracer = getTracer.call({});
   * String representing the **CallSite** of the `eval` **function** where the invocation was defined
 
 ```javascript
-var trace =  require('-trace');
+var trace =  require('stack-tracer');
 
 var myTracer = eval('trace()');
 //myTracer.isEval = true
@@ -234,7 +234,7 @@ myTracer = evalGetTracer();
   * Does the invocation occur with a **function** invoked as a **constructor**?
 
 ```javascript
-var trace =  require('-trace');
+var trace =  require('stack-tracer');
 
 var myTracer = trace();
 //myTracer.isConstructor = false
@@ -258,7 +258,7 @@ myTracer = new getTracer();
     * Will be **null** if no **caller** exists
 
 ```javascript
-var trace =  require('-trace');
+var trace =  require('stack-tracer');
 
 var myTracer = trace();
 //myTracer.function = <<this entire script>>
@@ -281,7 +281,7 @@ myTracer = getTracer();
     * Will be **null** if no **callee** exists
 
 ```javascript
-var trace =  require('-trace');
+var trace =  require('stack-tracer');
 
 
 var myTracer = trace();
@@ -349,7 +349,7 @@ The properties are all of the above properties, prefixed with '**\__**':
     * Does the invocation occur with a **function** invoked as a **constructor**?
 
 ```javascript
-var trace =  require('-trace')
+var trace =  require('stack-tracer')
 
 __line   //3, same as trace().line
 __column //1, same as trace().column
