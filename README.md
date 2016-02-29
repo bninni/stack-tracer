@@ -307,46 +307,63 @@ It is the equivalent of invoking `trace().<property>`
 
 The properties are all of the above properties, prefixed with '**\__**':
 
-  * **\__callSite**
-    * The corresponding **CallSite** Object
-  * **\__stack**
-    * The raw **Stack Trace** starting from the corresponding **CallSite** object
-  * **\__trace**
-    * This **Tracer** Object (self-referencing)
-  * **\__caller**
-    * The **Tracer** corresponding to the **CallSite** one level above this **CallSite** in the **Stack Trace**
-      * *i.e. the _function_ that _called_ this _function_*
-      * Will be **null** if no **caller** exists
-  * **\__callee**
-    * The **Tracer** corresponding to the **CallSite** one level below this **CallSite** in the **Stack Trace**
-      * *i.e. the _function_ that this _function_ _called_*
-      * Will be **null** if no **callee** exists
-  * **\__fileName**
-    * The name of the **file** where the invocation is defined
-  * **\__line**
-    * The **line** number of the invocation within the **file**
-  * **\__column**
-    * The **column** number of the invocation within the **file**
-  * **\__this**
-    * The `this` value in the context of the invocation
-  * **\__typeName**
-    * The **type** of `this` as a String
-  * **\__function**
-    * The **function** where the invocation occurred
-  * **\__functionName**
-    * The name of the **function** as a String
-  * **\__methodName**
-    * The name of the property within `this` which maps to the **function** where the invocation occurred
-  * **\__evalOrigin**
-    * String representing the **CallSite** of the `eval` **function** where the invocation was defined
-  * **\__isToplevel**
-    * Is `this` the `global` object?
-  * **\__isEval**
-    * Does the invocation occur within an **eval** statement?
-  * **\__isNative**
-    * Does the invocation occur within **Native** V8 code?
-  * **\__isConstructor**
-    * Does the invocation occur with a **function** invoked as a **constructor**?
+**\__callSite**
+  * The corresponding **CallSite** Object
+  
+**\__stack**
+  * The raw **Stack Trace** starting from the corresponding **CallSite** object
+  
+**\__trace**
+  * This **Tracer** Object (self-referencing)
+  
+**\__caller**
+  * The **Tracer** corresponding to the **CallSite** one level above this **CallSite** in the **Stack Trace**
+    * *i.e. the _function_ that _called_ this _function_*
+    * Will be **null** if no **caller** exists
+	
+**\__callee**
+  * The **Tracer** corresponding to the **CallSite** one level below this **CallSite** in the **Stack Trace**
+    * *i.e. the _function_ that this _function_ _called_*
+    * Will be **null** if no **callee** exists
+	
+**\__fileName**
+  * The name of the **file** where the invocation is defined
+  
+**\__line**
+  * The **line** number of the invocation within the **file**
+  
+**\__column**
+  * The **column** number of the invocation within the **file**
+  
+**\__this**
+  * The `this` value in the context of the invocation
+  
+**\__typeName**
+  * The **type** of `this` as a String
+  
+**\__function**
+  * The **function** where the invocation occurred
+  
+**\__functionName**
+  * The name of the **function** as a String
+  
+**\__methodName**
+  * The name of the property within `this` which maps to the **function** where the invocation occurred
+  
+**\__evalOrigin**
+  * String representing the **CallSite** of the `eval` **function** where the invocation was defined
+  
+**\__isToplevel**
+  * Is `this` the `global` object?
+  
+**\__isEval**
+  * Does the invocation occur within an **eval** statement?
+  
+**\__isNative**
+  * Does the invocation occur within **Native** V8 code?
+  
+**\__isConstructor**
+  * Does the invocation occur with a **function** invoked as a **constructor**?
 
 ```javascript
 var trace =  require('stack-tracer')
