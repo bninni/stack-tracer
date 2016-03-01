@@ -1,5 +1,5 @@
 # stack-tracer
-[![Build Status](https://travis-ci.org/bninni/stackstack-tracerr.svg?branch=master)](https://travis-ci.org/bninni/stackstack-tracerr)
+[![Build Status](https://travis-ci.org/bninni/stack-tracer.svg?branch=master)](https://travis-ci.org/bninni/stack-tracer)
 
 Global access to all CallSite/Stack Trace Properties and more
 
@@ -43,6 +43,7 @@ It then creates a **Tracer** Object containing information about a specific **Ca
 A **Tracer** Object can be created two ways:
   * [Explicitly by invoking the module export](#explicit)
   * [Implicitly by invoking one of the **global** properties the module creates](#implicit)
+  * [From an Error](#error)
 
 <a name="explicit"></a>
 ### Explicit
@@ -382,6 +383,34 @@ var myTracer = getTracer()
 
 myTracer = new getTracer()
 //myTracer.line = 15
+//myTracer.column = 11
+```
+
+<a name="error"></a>
+### From an Error
+[Back to Top](#usage)
+
+Every Error has the **\__stack** property which contains the raw **Stack Trace** Array.
+
+*Note - The `stack` property must be requested to invoke the creation of the ___stack_ property*
+
+A **Tracer** Object can be created from an Error by invoking the following:
+
+**trace.from( _error_ )**
+
+  * `error` - The Error Object that the **Tracer** Object should be based on
+  
+```javacsript
+var trace =  require('stack-tracer')
+
+var err = new Error();
+//error.__stack = undefined
+
+err.stack; //invoke the creation of the stack trace array
+//err.__stack = <<Array of CallSites>>
+
+var myTracer = trace.from( err );
+//myTracer.line = 3
 //myTracer.column = 11
 ```
 

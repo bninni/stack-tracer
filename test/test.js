@@ -78,38 +78,8 @@ vows.describe('Test').addBatch({
 		},
 		'Eval' : function(){
 			var myTracer = eval('__trace');
-			assert.equal( typeof myTracer.this, "undefined" );
-			assert.equal( myTracer.typeName, null );
 			assert.equal( myTracer.column, 1 );
 			assert.equal( myTracer.line, 1 );
-			assert.equal( myTracer.isEval, true );
-			
-			myTracer = eval.call({}, '__trace');
-			assert.equal( myTracer.this, global );
-			assert.equal( myTracer.typeName, "Object" );
-		},
-		'Eval on caller' : function(){
-			function getTracer(){
-				return trace();
-			}
-			var myTracer = getTracer();
-			assert.equal( myTracer.isEval, false );
-			assert.equal( myTracer.caller.isEval, false );
-			
-			myTracer = eval('getTracer()');
-			assert.equal( myTracer.isEval, false );
-			assert.equal( myTracer.caller.isEval, true );
-		},
-		'Eval on Function return' : function(){
-			function getEvalTracer(){
-				return eval('trace()');
-			}
-			var myTracer = getEvalTracer();
-			assert.equal( myTracer.isEval, true );
-		},
-		'Eval on Entire Function' : function(){
-			eval('function evalGetTracer(){ return trace() }')
-			var myTracer = evalGetTracer();
 			assert.equal( myTracer.isEval, true );
 		},
 		'Toplevel' : function(){
@@ -125,35 +95,6 @@ vows.describe('Test').addBatch({
 			myTracer = getTracer.call(this);
 			assert.equal( myTracer.isToplevel, false );
 		},
-		'Toplevel in Eval' : function(){
-			var myTracer = eval('trace()');
-			assert.equal( myTracer.isToplevel, true );
-		},
-		'Toplevel in Eval on caller' : function(){
-			function getTracer(){
-				return trace();
-			}
-			var myTracer = eval('getTracer.call({})');
-			assert.equal( myTracer.isToplevel, false );
-		},
-		'Toplevel in Eval on Function return' : function(){
-			function getEvalTracer(){
-				return eval('trace()');
-			}
-			var myTracer = eval('getEvalTracer()');
-			assert.equal( myTracer.isToplevel, true );
-			
-			myTracer = eval('getEvalTracer.call({})');
-			assert.equal( myTracer.isToplevel, true );
-		},
-		'Toplevel in Eval on Entire Function' : function(){
-			eval('function evalGetTracer(){ return trace() }')
-			var myTracer = evalGetTracer();
-			assert.equal( myTracer.isToplevel, true );
-			
-			myTracer = evalGetTracer.call(this);
-			assert.equal( myTracer.isToplevel, false );
-		},
 		'Constructor' : function(){
 			function getTracer(){
 				return __trace;
@@ -164,6 +105,17 @@ vows.describe('Test').addBatch({
 			
 			myTracer = new getTracer();
 			assert.equal( myTracer.isConstructor, true );
+		},
+		'From Error' : function(){
+			var err = new Error();
+			
+			assert.equal( typeof err.__stack, "undefined" );
+			
+			var myTracer = trace.from(err);
+			assert.equal( typeof err.__stack, "object" );
+				
+			assert.equal( myTracer.line, 110 );
+			assert.equal( myTracer.column, 14 );
 		}
 	},
 }).exportTo(module);

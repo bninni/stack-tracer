@@ -14,29 +14,31 @@ var TracerProperties = {
 		isNative : 'isNative',
 		isConstructor : 'isConstructor',
 	};
-
+	
 //To get a new Stack of Call Sites
 function getTrace( index ) {
 	var limit = Error.stackTraceLimit,
-		prepare = Error.prepareStackTrace,
 		obj = {},
 		stack;
 	
 	index = (typeof index === 'number' && index > 0 && index < Infinity) ? index : 0;
 	
 	Error.stackTraceLimit = Infinity;
-	Error.prepareStackTrace = function(obj, stack) {
-		return stack;
-	};
 	
 	Error.captureStackTrace(obj, getTrace);
-    
-	stack = obj.stack;
-  
-	Error.prepareStackTrace = prepare;
+	
+	obj.stack;
+
 	Error.stackTraceLimit = limit;
 	
-	return new Tracer( stack, index );
+	return new Tracer( obj.__stack, index );
+}
+
+getTrace.from = function( err ){
+	if( !(err instanceof Error) ) return null;
+	err.stack;
+	if( typeof err.__stack !== "object" || err.__stack === null || err.__stack.constructor !== Array || err.__stack.length < 1 ) return null;
+	return new Tracer( err.__stack, 0 );
 }
 
 //To add the given Tracer Property from the given CallSite to the given Tracer
@@ -140,6 +142,18 @@ function addGlobalProperties(){
 	for(propName in TracerProperties) addGlobalProperty(propName);
 }
 
+function prepareStackTrace(){
+	var joinStr = '\n    at ';
+
+	Error.prepareStackTrace = function(obj, stack) {
+		Object.defineProperty( obj, '__stack', {
+			value : stack
+		});
+		return obj + joinStr + stack.join( joinStr );
+	};
+}
+
+prepareStackTrace();
 addGlobalProperties();
 
 module.exports = getTrace;
