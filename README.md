@@ -15,7 +15,7 @@ npm install -g stack-tracer
 Then import the module into your program:
 
 ```javascript
-var trace =  require('stack-tracer')
+var trace = require('stack-tracer');
 ```
 
 ## Background
@@ -40,7 +40,7 @@ It then creates a **Tracer** Object containing information about a specific **Ca
 <a name="usage"></a>
 ## Usage
 
-A **Tracer** Object can be created two ways:
+A **Tracer** Object can be created multiple ways:
   * [Explicitly by invoking the module export](#explicit)
   * [Implicitly by invoking one of the **global** properties the module creates](#implicit)
   * [From an Error](#error)
@@ -74,6 +74,7 @@ It contains the following properties:
 
 **isNative**
   * Does the invocation occur within **Native** V8 code?
+  
 ---
 
 **line**
@@ -224,7 +225,7 @@ function getTracer(){
 myTracer = getTracer();
 //myTracer.isEval = true
 
-eval('function evalGetTracer(){ return trace() }')
+eval('function evalGetTracer(){ return trace() }');
 myTracer = evalGetTracer();
 //myTracer.isEval = true
 ```
@@ -297,6 +298,7 @@ myTracer = getTracer();
 //myTracer.callee.functionName = 'getTracer'
 ```
 
+---
 
 <a name="implicit"></a>
 ### Implicit
@@ -367,7 +369,7 @@ The properties are all of the above properties, prefixed with '**\__**':
   * Does the invocation occur with a **function** invoked as a **constructor**?
 
 ```javascript
-var trace =  require('stack-tracer')
+var trace =  require('stack-tracer');
 
 __line   //3, same as trace().line
 __column //1, same as trace().column
@@ -377,31 +379,33 @@ function getTracer(){
   else return __trace //same as trace().trace or trace()
 }
 
-var myTracer = getTracer()
+var myTracer = getTracer();
 //myTracer.line = 8
 //myTracer.column = 15
 
-myTracer = new getTracer()
+myTracer = new getTracer();
 //myTracer.line = 15
 //myTracer.column = 11
 ```
+
+---
 
 <a name="error"></a>
 ### From an Error
 [Back to Top](#usage)
 
-Every Error has the **\__stack** property which contains the raw **Stack Trace** Array.
+Every Error has a **\__stack** property which contains the raw **Stack Trace** Array.
 
-*Note - The `stack` property must be requested to invoke the creation of the ___stack_ property*
+*Note - The `Error.stack` property must be requested in order to invoke the creation of the _\__stack_ property*
 
-A **Tracer** Object can be created from an Error by invoking the following:
+A **Tracer** Object can then be created from an Error by invoking the following:
 
 **trace.from( _error_ )**
 
   * `error` - The Error Object that the **Tracer** Object should be based on
   
-```javacsript
-var trace =  require('stack-tracer')
+```javascript
+var trace =  require('stack-tracer');
 
 var err = new Error();
 //error.__stack = undefined

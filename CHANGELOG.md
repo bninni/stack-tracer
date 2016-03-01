@@ -6,4 +6,4 @@
 
 **Changes:**
   * Added in **__stack** property to Errors
-  * Added in **trace.from()** to create a Tracer from an Error
+  * Added in **trace.from()** to create a **Tracer** Object from an Error

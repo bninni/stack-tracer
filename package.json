@@ -1,6 +1,6 @@
 {
   "name": "stack-tracer",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Global access to all CallSite/Stack Trace Properties and more",
   "main": "index.js",
   "directories": {

@@ -116,6 +116,25 @@ vows.describe('Test').addBatch({
 				
 			assert.equal( myTracer.line, 110 );
 			assert.equal( myTracer.column, 14 );
-		}
+		},
+		'Getting null' : function(){
+			var myTracer = trace(100);
+			assert.equal( myTracer, null );
+			
+			myTracer = trace.from()
+			assert.equal( myTracer, null );
+			
+			myTracer = trace.from({})
+			assert.equal( myTracer, null );
+			
+			myTracer = trace.from(null)
+			assert.equal( myTracer, null );
+			
+			myTracer = trace.from({ __stack : {} })
+			assert.equal( myTracer, null );
+			
+			myTracer = trace.from({ __stack : [] })
+			assert.equal( myTracer, null );
+		},
 	},
 }).exportTo(module);
