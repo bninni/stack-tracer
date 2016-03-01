@@ -256,7 +256,7 @@ myTracer = new getTracer();
   
 **caller**
   * The **Tracer** corresponding to the **CallSite** one level above this **CallSite** in the **Stack Trace**
-    * *i.e. the _function_ that _called_ this _function_*
+    * *i.e. the __function__ that __called__ this __function__*
     * Will be **null** if no **caller** exists
 
 ```javascript
@@ -279,7 +279,7 @@ myTracer = getTracer();
 
 **callee**
   * The **Tracer** corresponding to the **CallSite** one level below this **CallSite** in the **Stack Trace**
-    * *i.e. the _function_ that this _function_ _called_*
+    * *i.e. the __function__ that this __function__ __called__*
     * Will be **null** if no **callee** exists
 
 ```javascript
@@ -311,22 +311,22 @@ It is the equivalent of invoking `trace().<property>`
 The properties are all of the above properties, prefixed with '**\__**':
 
 **\__callSite**
-  * The corresponding **CallSite** Object
+  * A **CallSite** Object for this invocation
   
 **\__stack**
-  * The raw **Stack Trace** starting from the corresponding **CallSite** object
+  * A raw **Stack Trace** Array starting from the corresponding **CallSite** object
   
 **\__trace**
-  * This **Tracer** Object (self-referencing)
+  * A **Tracer** Object for this invocation
   
 **\__caller**
   * The **Tracer** corresponding to the **CallSite** one level above this **CallSite** in the **Stack Trace**
-    * *i.e. the _function_ that _called_ this _function_*
+    * *i.e. the __function__ that __called__ this __function__*
     * Will be **null** if no **caller** exists
 	
 **\__callee**
   * The **Tracer** corresponding to the **CallSite** one level below this **CallSite** in the **Stack Trace**
-    * *i.e. the _function_ that this _function_ _called_*
+    * *i.e. the __function__ that this __function__ __called__*
     * Will be **null** if no **callee** exists
 	
 **\__fileName**
@@ -396,7 +396,7 @@ myTracer = new getTracer();
 
 Every Error has a **\__stack** property which contains the raw **Stack Trace** Array.
 
-*Note - The `Error.stack` property must be requested in order to invoke the creation of the _\__stack_ property*
+*Note - The `Error.stack` property must be requested in order to invoke the creation of the __\__stack__ property*
 
 A **Tracer** Object can then be created from an Error by invoking the following:
 
