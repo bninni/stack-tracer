@@ -1,3 +1,7 @@
+/*
+Copyright Brian Ninni 2016
+*/
+
 //The map of Tracer properties and the corresponding CallSite Method Names
 var TracerProperties = {
 		this : 'getThis',
@@ -172,9 +176,7 @@ function prepareStackTrace(){
 	var joinStr = '\n    at ';
 
 	Error.prepareStackTrace = function(obj, stack) {
-		Object.defineProperty( obj, '__stack', {
-			value : stack
-		});
+		obj.__stack = stack;
 		//To return a value which is identical to the original Error.stack string value
 		return obj + joinStr + stack.join( joinStr );
 	};
